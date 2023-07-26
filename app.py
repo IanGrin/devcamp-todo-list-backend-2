@@ -10,7 +10,8 @@ app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + \
 #     os.path.join(basedir, 'app.sqlite')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://htqgscmayxisbr:708d1f0af5eb0a2807bc5b9a1cf0beaaf8902edf8d3c7ca32d2bf705e3b86405@ec2-34-202-127-5.compute-1.amazonaws.com:5432/dch60dnmecil02"
+class Config(object):
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '').replace('postgres://', 'postgresql://') or 'sqlite:///' + os.path.join(basedir, 'app.db')
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
